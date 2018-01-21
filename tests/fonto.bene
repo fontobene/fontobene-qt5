@@ -1,0 +1,31 @@
+# This is a FontoBene test file.
+# Specifications: https://github.com/fontobene/fontobene
+
+[format]
+format = FontoBene
+format_version = 1.0
+
+[font]
+name = Test Font
+id = test
+author = Max Müller <max@example.com>
+version = 1.0
+license = GPL-3.0+
+
+[user]
+comment = This is a test font.
+
+---
+
+[0041] A
+0.8333,2.5;5.1666,2.5
+0,0;3,9;6,0
+
+[0066] f
+1,0;1,7.5;2.5,9,-4.5;3,9
+0,6;3,6
+
+[00C2] Â
+@0041
+1.5,11.5;3,13;4.5,11.5
+
