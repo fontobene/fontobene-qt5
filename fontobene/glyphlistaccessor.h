@@ -39,7 +39,7 @@ class GlyphListAccessor {
                 const Glyph& glyph = _list.at(index);
                 foreach (ushort ref, glyph.references) {
                     int refIndex = getAndUpdateGlyphIndex(ref);
-                    if (refIndex >= index) { // forward references are forbidden!
+                    if (refIndex < index) { // forward references are forbidden!
                         polylines.append(getAllPolylinesOfGlyph(ref, ok));
                     } else if (ok) {
                         *ok = false;
