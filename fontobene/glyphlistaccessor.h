@@ -10,9 +10,9 @@ class GlyphListAccessor {
     private:
         const GlyphList& _list;
         const Glyph _nullGlyph;
-        QHash<ushort, int> _cachedIndices; // cached GlyphList indices of codeponts
+        mutable QHash<ushort, int> _cachedIndices; // cached GlyphList indices of codeponts
 
-        int getAndUpdateGlyphIndex(ushort codepoint) noexcept {
+        int getAndUpdateGlyphIndex(ushort codepoint) const noexcept {
             int index = _cachedIndices.value(codepoint, -2);
             if (index == -2) { // codepoint not found in cache, so add it now
                 index = -1;
@@ -32,7 +32,7 @@ class GlyphListAccessor {
             }
         }
 
-        QVector<Polyline> getAllPolylinesOfGlyphImpl(ushort codepoint, bool* ok) noexcept {
+        QVector<Polyline> getAllPolylinesOfGlyphImpl(ushort codepoint, bool* ok) const noexcept {
             QVector<Polyline> polylines;
             int index = getAndUpdateGlyphIndex(codepoint);
             if (index >= 0) {
@@ -62,12 +62,12 @@ class GlyphListAccessor {
             _cachedIndices.clear();
         }
 
-        const Glyph& getGlyph(ushort codepoint) noexcept {
+        const Glyph& getGlyph(ushort codepoint) const noexcept {
             int index = getAndUpdateGlyphIndex(codepoint);
             return (index >= 0) ? _list.at(index) : _nullGlyph;
         }
 
-        QVector<Polyline> getAllPolylinesOfGlyph(ushort codepoint, bool* ok = nullptr) noexcept {
+        QVector<Polyline> getAllPolylinesOfGlyph(ushort codepoint, bool* ok = nullptr) const noexcept {
             if (ok) { *ok = true; }
             return getAllPolylinesOfGlyphImpl(codepoint, ok);
         }
