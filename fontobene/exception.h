@@ -5,10 +5,14 @@
 
 namespace fontobene {
 
-class Exception : public std::runtime_error {
+class Exception : public QException {
+        QString _msg;
     public:
-        Exception(const QString& msg) : std::runtime_error(msg.toStdString()) {}
-        QString msg() const noexcept {return QString(what());}
+        Exception(const QString& msg) : QException(), _msg(msg) {}
+        Exception(const Exception& other) : QException(other), _msg(other._msg) {}
+        const QString& msg() const noexcept { return _msg; }
+        void raise() const override { throw *this; }
+        Exception* clone() const override { return new Exception(*this); }
 };
 
 } // namespace fontobene
