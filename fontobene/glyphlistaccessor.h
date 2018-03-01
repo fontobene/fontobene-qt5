@@ -39,10 +39,13 @@ class GlyphListAccessor {
                 const Glyph& glyph = _list.at(index);
                 foreach (ushort ref, glyph.references) {
                     int refIndex = getAndUpdateGlyphIndex(ref);
-                    if (refIndex < index) { // forward references are forbidden!
+                    if ((refIndex >= 0) && (refIndex < index)) {
                         polylines.append(getAllPolylinesOfGlyph(ref, ok));
-                    } else if (ok) {
-                        *ok = false;
+                    } else {
+                        // forward references are forbidden (to avoid endless loops)!
+                        qWarning() << "fontobene::GlyphListAccessor: Ignore invalid "
+                                      "reference in glyph" << QChar(codepoint);
+                        if (ok) { *ok = false; }
                     }
                 }
                 polylines.append(glyph.polylines);
