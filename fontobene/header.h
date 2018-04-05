@@ -9,6 +9,7 @@ namespace fontobene {
 struct Header {
     QString id;
     QString name;
+    QString description;
     QString version;
     QStringList authors;
     QStringList licenses;
@@ -17,6 +18,7 @@ struct Header {
     void clear() noexcept {
         id.clear();
         name.clear();
+        description.clear();
         version.clear();
         authors.clear();
         licenses.clear();
@@ -72,14 +74,16 @@ struct Header {
                         section = Section::End;
                     } else if (line == QStringLiteral("[user]")) {
                         section = Section::User;
-                    } else if (key == QStringLiteral("name")) {
-                        name = value;
                     } else if (key == QStringLiteral("id")) {
                         id = value;
-                    } else if (key == QStringLiteral("author")) {
-                        authors.append(value);
+                    } else if (key == QStringLiteral("name")) {
+                        name = value;
+                    } else if (key == QStringLiteral("description")) {
+                        description = value;
                     } else if (key == QStringLiteral("version")) {
                         version = value;
+                    } else if (key == QStringLiteral("author")) {
+                        authors.append(value);
                     } else if (key == QStringLiteral("license")) {
                         licenses.append(value);
                     } else {
