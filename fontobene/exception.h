@@ -32,6 +32,18 @@ class GlyphNotFoundException : public Exception {
         Exception* clone() const override { return new GlyphNotFoundException(*this); }
 };
 
+class ForwardReferenceException : public Exception {
+        ushort _codepoint;
+    public:
+        explicit ForwardReferenceException(ushort codepoint) :
+            Exception(QString("Forward reference detected in %1.").arg(cp2str(codepoint)),
+                      codepoint) {}
+        ForwardReferenceException(const ForwardReferenceException& other) :
+            Exception(other) {}
+        void raise() const override { throw *this; }
+        Exception* clone() const override { return new ForwardReferenceException(*this); }
+};
+
 } // namespace fontobene
 
 #endif // FONTOBENE_EXCEPTION_H
