@@ -19,6 +19,7 @@ HEADERS += \
     fontobene/glyph.h \
     fontobene/glyphlist.h \
     fontobene/glyphlistaccessor.h \
+    fontobene/glyphlistcache.h \
     fontobene/header.h \
     fontobene/helpers.h \
 
