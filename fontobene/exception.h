@@ -22,7 +22,6 @@ class Exception : public QException {
 };
 
 class GlyphNotFoundException : public Exception {
-
     public:
         explicit GlyphNotFoundException(ushort codepoint) :
             Exception(QString("Glyph %1 not found.").arg(cp2str(codepoint)), codepoint) {}
@@ -33,7 +32,6 @@ class GlyphNotFoundException : public Exception {
 };
 
 class ForwardReferenceException : public Exception {
-        ushort _codepoint;
     public:
         explicit ForwardReferenceException(ushort codepoint) :
             Exception(QString("Forward reference detected in %1.").arg(cp2str(codepoint)),
