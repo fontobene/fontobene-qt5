@@ -13,6 +13,8 @@ struct Header {
     QString version;
     QStringList authors;
     QStringList licenses;
+    qreal letterSpacing;
+    qreal lineSpacing;
     QMap<QString, QString> userData;
 
     void clear() noexcept {
@@ -22,6 +24,8 @@ struct Header {
         version.clear();
         authors.clear();
         licenses.clear();
+        letterSpacing = 0;
+        lineSpacing = 9;
         userData.clear();
     }
 
@@ -86,6 +90,10 @@ struct Header {
                         authors.append(value);
                     } else if (key == QStringLiteral("license")) {
                         licenses.append(value);
+                    } else if (key == QStringLiteral("letter_spacing")) {
+                        letterSpacing = str2qreal(value); // can throw
+                    } else if (key == QStringLiteral("line_spacing")) {
+                        lineSpacing = str2qreal(value); // can throw
                     } else {
                         throw Exception(QString("Unexpected content: \"%1\"").arg(line));
                     }

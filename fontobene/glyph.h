@@ -46,10 +46,16 @@ struct Polyline : public QVector<Vertex> {
     }
 };
 
+struct OptionalSpacing {
+    bool enabled;
+    float value;
+};
+
 struct Glyph {
     ushort codepoint = 0; // U+0000 (NULL) is considered as invalid glyph
     QVector<ushort> references;
     QVector<Polyline> polylines;
+    OptionalSpacing spacing = {false, 0};
 
     bool isValid() const noexcept {
         return codepoint > 0;
@@ -82,6 +88,9 @@ struct Glyph {
                 case State::Body: {
                     if (line.startsWith('@')) {
                         glyph.references.append(str2codepoint(line.mid(1, -1)));
+                    } else if (line.startsWith('~')) {
+                        glyph.spacing.value = str2qreal(line.mid(1, -1)); // can throw
+                        glyph.spacing.enabled = true;
                     } else if (!line.isEmpty()) {
                         glyph.polylines.append(Polyline::fromString(line));
                     } else {
