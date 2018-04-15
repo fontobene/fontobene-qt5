@@ -9,6 +9,7 @@ namespace fontobene {
 class GlyphListCache {
     private:
         const GlyphList& _list;
+        ushort _replacementGlyph; // replacement for non-existent glyphs
         QHash<ushort, QVector<ushort>> _glyphReplacements;
         mutable QHash<ushort, int> _cachedIndices; // cached GlyphList indices of codeponts
 
@@ -23,7 +24,8 @@ class GlyphListCache {
 
         int lookupGlyphIndex(ushort codepoint) const noexcept {
             QVector<ushort> lookup = QVector<ushort>{codepoint} +
-                                     _glyphReplacements.value(codepoint);
+                                     _glyphReplacements.value(codepoint) +
+                                     QVector<ushort>{_replacementGlyph};
             foreach (ushort glyph, lookup) {
                 int index = findGlyphIndex(glyph);
                 if (index >= 0) { return index; }
@@ -39,7 +41,8 @@ class GlyphListCache {
             }
             if ((index >= 0) && (index < _list.length())) {
                 Q_ASSERT((_list.at(index).codepoint == codepoint) ||
-                    (_glyphReplacements.value(codepoint).contains(_list.at(index).codepoint)));
+                    (_glyphReplacements.value(codepoint).contains(_list.at(index).codepoint)) ||
+                    (_list.at(index).codepoint == _replacementGlyph));
                 return index;
             } else {
                 return -1;
@@ -50,8 +53,13 @@ class GlyphListCache {
     public:
         GlyphListCache() = delete;
         GlyphListCache(const GlyphListCache& other) = delete;
-        GlyphListCache(const GlyphList& list) noexcept : _list(list) {}
+        GlyphListCache(const GlyphList& list) noexcept
+            : _list(list), _replacementGlyph(0) {}
         GlyphListCache& operator=(const GlyphListCache& rhs) = delete;
+
+        void setReplacementGlyph(ushort codepoint) noexcept {
+            _replacementGlyph = codepoint;
+        }
 
         void addReplacements(ushort codepoint, const QVector<ushort>& replacements) noexcept {
             _glyphReplacements[codepoint] += replacements;
