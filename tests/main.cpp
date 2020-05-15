@@ -1,5 +1,5 @@
 #include <QtCore>
-#include "../fontobene/fontobene.h"
+#include "../fontobene-qt5/fontobene.h"
 
 using namespace fontobene;
 
