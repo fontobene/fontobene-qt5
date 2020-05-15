@@ -1,5 +1,16 @@
 # C++/Qt5 FontoBene Parser
 
+A header-only library to parse FontoBene stroke fonts with C++/Qt5.
+
+## Installing
+
+    $ mkdir build
+    $ cd build
+    $ qmake -r .. PREFIX=/usr
+    $ make
+    $ tests/fontobene-qt5-tests
+    $ make install
+
 ## License
 
 Licensed under either of
