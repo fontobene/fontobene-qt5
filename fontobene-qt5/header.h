@@ -58,7 +58,7 @@ struct Header {
                         if (format != QStringLiteral("FontoBene")) {
                             throw Exception(QString("Unknown format: \"%1\"").arg(format));
                         }
-                        if (formatVersion != QStringLiteral("1.0")) {
+                        if (!formatVersion.startsWith(QStringLiteral("1."))) {
                             throw Exception(QString("Unsupported format version: \"%1\"")
                                             .arg(formatVersion));
                         }
