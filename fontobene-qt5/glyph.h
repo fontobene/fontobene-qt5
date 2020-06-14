@@ -39,7 +39,7 @@ struct Vertex {
 struct Polyline : public QVector<Vertex> {
     static Polyline fromString(const QString& str) {
         Polyline p;
-        foreach (const QString& vertex, str.split(';', QString::SkipEmptyParts)) {
+        foreach (const QString& vertex, str.split(';')) {
             p.append(Vertex::fromString(vertex));
         }
         return p;
