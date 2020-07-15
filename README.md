@@ -11,6 +11,12 @@ A header-only library to parse FontoBene stroke fonts with C++/Qt5.
     $ tests/fontobene-qt5-tests
     $ make install
 
+## pkg-config
+
+If you're packaging fontobene-qt5 and want an example pkg-config file, check
+out `fontobene-qt5.pc.example`. Depending on your distro, the `includedir`
+might need adjusting.
+
 ## License
 
 Licensed under either of
