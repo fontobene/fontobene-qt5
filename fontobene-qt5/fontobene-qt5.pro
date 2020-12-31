@@ -24,5 +24,5 @@ HEADERS += \
 
 INSTALLS += headers
 
-headers.path = $$PREFIX/include/fontobene-qt5
+headers.path = $$PREFIX/include/fontobene-qt5/fontobene-qt5
 headers.files = $$HEADERS

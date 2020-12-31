@@ -12,6 +12,12 @@ Possible log types:
 - `[security]` to invite users to upgrade in case of vulnerabilities.
 
 
+### Unreleased
+
+- [added] Support for CMake
+- [changed] The header files are now installed into a subdirectory, so instead
+  of `#include <fontobene.h>` you now need to use `#include <fontobene-qt5/fontobene.h>`.
+
 ### 0.1.0 (2020-05-18)
 
 - First release
