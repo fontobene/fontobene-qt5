@@ -25,8 +25,8 @@ jobs:
         run: build/tests/fontobene-qt5-tests
 
   test_cmake:
-    name: build and run tests with cmake
-    runs-on: ubuntu-18.04
+    name: build and run tests with cmake 3.16 (ubuntu 20.04)
+    runs-on: ubuntu-20.04
     env:
       DEBIAN_FRONTEND: noninteractive
     steps:
@@ -44,8 +44,8 @@ jobs:
       - name: Run tests
         run: build/tests/fontobene-qt5-tests
 
-  test_cmake_3.5:
-    name: build and run tests with cmake
+  test_cmake_min_version:
+    name: build and run tests with cmake 3.5 (ubuntu 16.04)
     runs-on: ubuntu-16.04
     env:
       DEBIAN_FRONTEND: noninteractive
