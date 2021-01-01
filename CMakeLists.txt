@@ -5,19 +5,10 @@ if(${CMAKE_VERSION} VERSION_LESS 3.12)
 endif()
 
 # Define project
-if(${CMAKE_VERSION} VERSION_LESS 3.12)
-    project(fontobene_qt5
-        VERSION 0.1.0
-        LANGUAGES CXX
-    )
-else()
-    project(fontobene_qt5
-        VERSION 0.1.0
-        DESCRIPTION "A header-only library to parse FontoBene stroke fonts with C++11/Qt5."
-        HOMEPAGE_URL "https://github.com/fontobene/fontobene-qt5"
-        LANGUAGES CXX
-    )
-endif()
+project(fontobene_qt5
+    VERSION 0.1.0
+    LANGUAGES CXX
+)
 
 # Options
 option(FONTOBENE_ENABLE_TESTS "Build tests for fontobene-qt5." ON)
