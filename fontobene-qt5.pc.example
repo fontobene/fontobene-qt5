@@ -5,5 +5,5 @@ Name: fontobene-qt5
 Description: FontoBene parser for Qt5 (header-only)
 Version: 0.1.0
 Libs:
-Cflags: -I${includedir}/fontobene-qt5
+Cflags: -I${includedir}
 Requires: Qt5Core
