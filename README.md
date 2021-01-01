@@ -1,6 +1,6 @@
 # C++/Qt5 FontoBene Parser
 
-A header-only library to parse FontoBene stroke fonts with C++/Qt5.
+A header-only library to parse FontoBene stroke fonts with C++11/Qt5.
 
 ## Installing
 

@@ -13,7 +13,7 @@ if(${CMAKE_VERSION} VERSION_LESS 3.12)
 else()
     project(fontobene_qt5
         VERSION 0.1.0
-        DESCRIPTION "A header-only library to parse FontoBene stroke fonts with C++/Qt5."
+        DESCRIPTION "A header-only library to parse FontoBene stroke fonts with C++11/Qt5."
         HOMEPAGE_URL "https://github.com/fontobene/fontobene-qt5"
         LANGUAGES CXX
     )
@@ -21,6 +21,11 @@ endif()
 
 # Options
 option(FONTOBENE_ENABLE_TESTS "Build tests for fontobene-qt5." ON)
+
+# Use C++11
+set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
 
 # Find required Qt packages
 find_package(Qt5 5.2.0 COMPONENTS Core REQUIRED)
