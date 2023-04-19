@@ -13,6 +13,7 @@ struct Font {
 
     Font() = default;
     Font(const Font& other) = default;
+    Font& operator=(const Font& rhs) = default;
 
     Font(QTextStream& content) {
         load(content);
