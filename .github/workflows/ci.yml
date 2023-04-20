@@ -5,24 +5,27 @@ name: CI
 jobs:
 
   qmake:
-    name: "qmake on ${{ matrix.runner }}"
-    runs-on: "${{ matrix.runner }}"
+    name: "qmake on ${{ matrix.container }}"
+    runs-on: ubuntu-latest
+    container: "${{ matrix.container }}"
     strategy:
       matrix:
-        runner:
-          - "ubuntu-16.04"
-          - "ubuntu-18.04"
-          - "ubuntu-20.04"
+        include:
+          - container: "ubuntu:18.04"
+            packages: qt5-default qttools5-dev-tools
+          - container: "ubuntu:20.04"
+            packages: qt5-default qttools5-dev-tools
+          - container: "ubuntu:22.04"
+            packages: qtbase5-dev qttools5-dev-tools
     env:
       DEBIAN_FRONTEND: noninteractive
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Install qt and build tools
         run: |
-          sudo apt-get update &&
-          sudo apt-get install -y --no-install-recommends \
-            pkg-config g++ make \
-            qt5-default qttools5-dev-tools
+          apt-get update &&
+          apt-get install -y --no-install-recommends \
+            pkg-config g++ make ${{ matrix.packages }}
       - name: Run qmake
         run: mkdir build && cd build && qmake -r .. "QMAKE_CXXFLAGS=-Werror"
       - name: Build
@@ -31,29 +34,32 @@ jobs:
         run: build/tests/fontobene-qt5-tests
 
   cmake:
-    name: "cmake on ${{ matrix.runner }}"
-    runs-on: "${{ matrix.runner }}"
+    name: "cmake on ${{ matrix.container }}"
+    runs-on: ubuntu-latest
+    container: "${{ matrix.container }}"
     strategy:
       matrix:
-        runner:
-          - "ubuntu-16.04"
-          - "ubuntu-18.04"
-          - "ubuntu-20.04"
+        include:
+          - container: "ubuntu:18.04"
+            packages: qt5-default qttools5-dev-tools
+          - container: "ubuntu:20.04"
+            packages: qt5-default qttools5-dev-tools
+          - container: "ubuntu:22.04"
+            packages: qtbase5-dev qttools5-dev-tools
     env:
       DEBIAN_FRONTEND: noninteractive
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Install qt and build tools
         run: |
-          sudo apt-get update &&
-          sudo apt-get install -y --no-install-recommends \
-            pkg-config g++ make cmake \
-            qt5-default qttools5-dev-tools
+          apt-get update &&
+          apt-get install -y --no-install-recommends \
+            pkg-config g++ make cmake ${{ matrix.packages }}
       - name: Show cmake version
         run: cmake --version
       - name: Run cmake
-        run: cmake -S . -B build
+        run: mkdir build && cd build && cmake ..
       - name: Build
-        run: cmake --build build -j8 -v
+        run: cd build && make -j8
       - name: Run tests
         run: build/tests/fontobene-qt5-tests
