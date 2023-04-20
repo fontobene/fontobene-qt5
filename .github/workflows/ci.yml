@@ -10,10 +10,13 @@ jobs:
     container: "${{ matrix.container }}"
     strategy:
       matrix:
-        container:
-          - "ubuntu:16.04"
-          - "ubuntu:18.04"
-          - "ubuntu:20.04"
+        include:
+          - container: "ubuntu:18.04"
+            packages: qt5-default qttools5-dev-tools
+          - container: "ubuntu:20.04"
+            packages: qt5-default qttools5-dev-tools
+          - container: "ubuntu:22.04"
+            packages: qtbase5-dev qttools5-dev-tools
     env:
       DEBIAN_FRONTEND: noninteractive
     steps:
@@ -22,8 +25,7 @@ jobs:
         run: |
           apt-get update &&
           apt-get install -y --no-install-recommends \
-            pkg-config g++ make \
-            qt5-default qttools5-dev-tools
+            pkg-config g++ make ${{ matrix.packages }}
       - name: Run qmake
         run: mkdir build && cd build && qmake -r .. "QMAKE_CXXFLAGS=-Werror"
       - name: Build
@@ -37,10 +39,13 @@ jobs:
     container: "${{ matrix.container }}"
     strategy:
       matrix:
-        container:
-          - "ubuntu:16.04"
-          - "ubuntu:18.04"
-          - "ubuntu:20.04"
+        include:
+          - container: "ubuntu:18.04"
+            packages: qt5-default qttools5-dev-tools
+          - container: "ubuntu:20.04"
+            packages: qt5-default qttools5-dev-tools
+          - container: "ubuntu:22.04"
+            packages: qtbase5-dev qttools5-dev-tools
     env:
       DEBIAN_FRONTEND: noninteractive
     steps:
@@ -49,8 +54,7 @@ jobs:
         run: |
           apt-get update &&
           apt-get install -y --no-install-recommends \
-            pkg-config g++ make cmake \
-            qt5-default qttools5-dev-tools
+            pkg-config g++ make cmake ${{ matrix.packages }}
       - name: Show cmake version
         run: cmake --version
       - name: Run cmake
