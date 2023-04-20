@@ -5,22 +5,23 @@ name: CI
 jobs:
 
   qmake:
-    name: "qmake on ${{ matrix.runner }}"
-    runs-on: "${{ matrix.runner }}"
+    name: "qmake on ${{ matrix.container }}"
+    runs-on: ubuntu-latest
+    container: "${{ matrix.container }}"
     strategy:
       matrix:
-        runner:
-          - "ubuntu-16.04"
-          - "ubuntu-18.04"
-          - "ubuntu-20.04"
+        container:
+          - "ubuntu:16.04"
+          - "ubuntu:18.04"
+          - "ubuntu:20.04"
     env:
       DEBIAN_FRONTEND: noninteractive
     steps:
       - uses: actions/checkout@v3
       - name: Install qt and build tools
         run: |
-          sudo apt-get update &&
-          sudo apt-get install -y --no-install-recommends \
+          apt-get update &&
+          apt-get install -y --no-install-recommends \
             pkg-config g++ make \
             qt5-default qttools5-dev-tools
       - name: Run qmake
@@ -31,29 +32,30 @@ jobs:
         run: build/tests/fontobene-qt5-tests
 
   cmake:
-    name: "cmake on ${{ matrix.runner }}"
-    runs-on: "${{ matrix.runner }}"
+    name: "cmake on ${{ matrix.container }}"
+    runs-on: ubuntu-latest
+    container: "${{ matrix.container }}"
     strategy:
       matrix:
-        runner:
-          - "ubuntu-16.04"
-          - "ubuntu-18.04"
-          - "ubuntu-20.04"
+        container:
+          - "ubuntu:16.04"
+          - "ubuntu:18.04"
+          - "ubuntu:20.04"
     env:
       DEBIAN_FRONTEND: noninteractive
     steps:
       - uses: actions/checkout@v3
       - name: Install qt and build tools
         run: |
-          sudo apt-get update &&
-          sudo apt-get install -y --no-install-recommends \
+          apt-get update &&
+          apt-get install -y --no-install-recommends \
             pkg-config g++ make cmake \
             qt5-default qttools5-dev-tools
       - name: Show cmake version
         run: cmake --version
       - name: Run cmake
-        run: cmake -S . -B build
+        run: mkdir build && cd build && cmake ..
       - name: Build
-        run: cmake --build build -j8 -v
+        run: cd build && make -j8
       - name: Run tests
         run: build/tests/fontobene-qt5-tests
