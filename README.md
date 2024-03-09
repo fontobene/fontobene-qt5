@@ -2,6 +2,18 @@
 
 A header-only library to parse FontoBene stroke fonts with C++11/Qt5.
 
+```
+                 ___  ___ ___ ___ ___ ___   _ _____ ___ ___
+                |   \| __| _ \ _ \ __/ __| /_\_   _| __|   \
+                | |) | _||  _/   / _| (__ / _ \| | | _|| |) |
+                |___/|___|_| |_|_\___\___/_/ \_\_| |___|___/
+
+```
+**This repository is deprecated and not maintained anymore!
+Please use [fontobene-qt](https://github.com/fontobene/fontobene-qt) instead.**
+
+---
+
 ## Installing
 
 ### qmake
